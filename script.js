@@ -20,10 +20,39 @@ function startGame() {
 // Calculate completion percentage
 function calculateCompletion(passcode, guess) {
     let correctCount = 0;
-    for (let i = 0; i < passcode.length; i++) {
-        if (passcode[i] === guess[i]) correctCount++;
+    let weightedCount = 0;
+    const length = passcode.length;
+
+    // Track matched digits in the passcode to avoid double-counting
+    const matched = Array(length).fill(false);
+
+    // First pass: check for numbers in the correct position
+    for (let i = 0; i < length; i++) {
+        if (passcode[i] === guess[i]) {
+            correctCount++;
+            matched[i] = true; // Mark as matched
+        }
     }
-    return (correctCount / passcode.length) * 100;
+
+    // Second pass: check for correct numbers in incorrect positions
+    for (let i = 0; i < length; i++) {
+        if (passcode[i] !== guess[i]) {
+            for (let j = 0; j < length; j++) {
+                if (!matched[j] && passcode[j] === guess[i]) {
+                    // Calculate distance-based weight
+                    const distance = Math.abs(i - j);
+                    weightedCount += (length - distance) / length;
+                    matched[j] = true; // Mark as matched
+                    break;
+                }
+            }
+        }
+    }
+
+    // Calculate final completion percentage
+    const exactMatchPercent = (correctCount / length) * 100;
+    const weightedPercent = (weightedCount / length) * 50; // Weighted counts contribute up to 50%
+    return exactMatchPercent + weightedPercent;
 }
 
 // Submit a guess
