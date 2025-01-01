@@ -102,4 +102,18 @@ Objective:
         greetings: 'Welcome to the Passcode Decoder Terminal! Type "help" or "-h" for instructions.',
         prompt: '> '
     });
+    
+    function adjustTerminalHeight() {
+        const terminal = document.getElementById("terminal");
+        const viewportHeight = window.innerHeight;
+    
+        // Set the terminal height dynamically
+        terminal.style.height = `${viewportHeight - 50}px`; // Adjust 50px margin for the header/footer
+    }
+    
+    // Adjust the terminal height when the page loads
+    window.addEventListener("load", adjustTerminalHeight);
+    
+    // Adjust the terminal height on resize (e.g., when the keyboard appears/disappears)
+    window.addEventListener("resize", adjustTerminalHeight);
 });
