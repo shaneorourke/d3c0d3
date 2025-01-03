@@ -4,12 +4,15 @@ html, body {
     height: 100%;
     background-color: black;
     overflow: hidden;
-    position: relative;
+    position: relative; /* Maintain layout consistency */
 }
 
 #terminal {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: calc(var(--vh) - 50px); /* Adjust 50px as needed */
+    height: calc(var(--vh) - 50px); /* Dynamically adjust to keyboard */
     background: black;
     color: lime;
     border: 1px solid lime;
