@@ -51,25 +51,29 @@ $(document).ready(function () {
             this.echo(`Game started! Decode the ${length}-digit passcode.`);
         },
         guess: function (input) {
-            if (passcode === '') {
+            if (passcode.length === 0) {
                 this.echo('Start the game first using: start [4|6|8]');
                 return;
             }
         
-            // Ensure input is treated as a string
+            // Explicitly convert input to a string and trim spaces
             input = String(input).trim();
         
-            if (input.length !== passcode.length || !/^\d+$/.test(input)) {
+            // Convert the input string into an array of digits
+            const guessArray = input.split('').map(Number);
+        
+            // Validate input
+            if (guessArray.length !== passcode.length || guessArray.some(isNaN)) {
                 this.echo(`Invalid input. Enter a numeric guess of exactly ${passcode.length} digits.`);
                 return;
             }
         
             attempts++;
-            const completion = calculateCompletion(passcode, input);
+            const completion = calculateCompletion(passcode, guessArray);
         
             if (completion === 100) {
-                this.echo(`🎉 Congratulations! You cracked the code "${passcode}" in ${attempts} attempts!`);
-                passcode = ''; // Reset the game
+                this.echo(`🎉 Congratulations! You cracked the code "${passcode.join('')}" in ${attempts} attempts!`);
+                passcode = []; // Reset the game
             } else {
                 this.echo(`Completion: ${completion.toFixed(2)}%. Try again!`);
                 if (attempts === 5) {
@@ -103,22 +107,22 @@ Objective:
         prompt: '> '
     });
 
-    // Update the viewport height variable
+    // Dynamically update the CSS variable for viewport height
     function updateViewportHeight() {
-        const vh = window.innerHeight * 0.01; // 1% of the viewport height
+        const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh * 100}px`);
     }
 
-    // Keep the terminal in view when typing
+    // Lock focus and ensure terminal stays visible when interacting
     function lockFocus() {
         const terminal = document.getElementById('terminal');
         terminal.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
-    // Call updateViewportHeight on load and resize
+    // Update viewport height on load and resize
     window.addEventListener('load', updateViewportHeight);
     window.addEventListener('resize', updateViewportHeight);
 
-    // Focus lock on input (optional, if user interaction causes scrolling)
+    // Prevent terminal from being pushed out of view on click
     document.getElementById('terminal').addEventListener('click', lockFocus);
 });
