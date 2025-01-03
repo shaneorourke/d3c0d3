@@ -106,23 +106,4 @@ Objective:
         greetings: 'Welcome to the Passcode Decoder Terminal! Type "help" or "-h" for instructions.',
         prompt: '> '
     });
-
-    // Dynamically update the CSS variable for viewport height
-    function updateViewportHeight() {
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh * 100}px`);
-    }
-
-    // Lock focus and ensure terminal stays visible when interacting
-    function lockFocus() {
-        const terminal = document.getElementById('terminal');
-        terminal.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-
-    // Update viewport height on load and resize
-    window.addEventListener('load', updateViewportHeight);
-    window.addEventListener('resize', updateViewportHeight);
-
-    // Prevent terminal from being pushed out of view on click
-    document.getElementById('terminal').addEventListener('click', lockFocus);
 });
