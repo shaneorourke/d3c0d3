@@ -2,20 +2,22 @@
     --vh: 100%;
 }
 
-body {
+/* Ensure html and body take up the full viewport and have a black background */
+html, body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background: black;
+    height: 100%;
+    background-color: black;
+    overflow: hidden; /* Prevent scrolling past the terminal */
 }
 
 #terminal {
     width: 100%;
-    height: calc(var(--vh) - 50px); /* Subtract 50px for padding, header, or footer if needed */
+    height: calc(var(--vh) - 50px); /* Adjust height dynamically with --vh */
     background: black;
     color: lime;
     border: 1px solid lime;
     padding: 10px;
     box-shadow: 0 0 10px lime;
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    overflow-y: auto; /* Allow scrolling if the terminal content overflows */
 }
