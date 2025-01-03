@@ -1,0 +1,20 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: black;
+    overflow: hidden;
+    position: relative;
+}
+
+#terminal {
+    width: 100%;
+    height: calc(var(--vh) - 20%); /* Adjust the height to leave space for the keyboard */
+    max-height: 80vh; /* Ensure the terminal never takes up more than 80% of the viewport */
+    background: black;
+    color: lime;
+    border: 1px solid lime;
+    padding: 10px;
+    box-shadow: 0 0 10px lime;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
