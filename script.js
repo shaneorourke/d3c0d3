@@ -56,17 +56,17 @@ $(document).ready(function () {
                 return;
             }
         
-            // Explicitly convert input to a string and trim spaces
+            // Treat input as a string and ensure no unintended conversion
             input = String(input).trim();
         
-            // Convert the input string into an array of digits
-            const guessArray = input.split('').map(Number);
-        
-            // Validate input
-            if (guessArray.length !== passcode.length || guessArray.some(isNaN)) {
+            // Validate input: Check length and ensure all characters are numeric
+            if (input.length !== passcode.length || !/^\d+$/.test(input)) {
                 this.echo(`Invalid input. Enter a numeric guess of exactly ${passcode.length} digits.`);
                 return;
             }
+        
+            // Convert the input string into an array of characters (preserving leading zeros)
+            const guessArray = input.split('').map(Number);
         
             attempts++;
             const completion = calculateCompletion(passcode, guessArray);
